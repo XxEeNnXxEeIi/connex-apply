@@ -1,0 +1,14 @@
+C:\Tanachod\MyProject\connex-apply\bin\Debug\net8.0\connex-apply.exe
+C:\Tanachod\MyProject\connex-apply\bin\Debug\net8.0\connex-apply.deps.json
+C:\Tanachod\MyProject\connex-apply\bin\Debug\net8.0\connex-apply.runtimeconfig.json
+C:\Tanachod\MyProject\connex-apply\bin\Debug\net8.0\connex-apply.dll
+C:\Tanachod\MyProject\connex-apply\bin\Debug\net8.0\connex-apply.pdb
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\connex-apply.GeneratedMSBuildEditorConfig.editorconfig
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\connex-apply.AssemblyInfoInputs.cache
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\connex-apply.AssemblyInfo.cs
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\connex-apply.csproj.CoreCompileInputs.cache
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\connex-apply.dll
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\refint\connex-apply.dll
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\connex-apply.pdb
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\connex-apply.genruntimeconfig.cache
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\ref\connex-apply.dll
