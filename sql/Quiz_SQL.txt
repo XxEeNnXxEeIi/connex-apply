@@ -1,0 +1,222 @@
+Quiz Samples (แบบทดสอบกำหนด)
+ 
+1. INNER JOIN (Customer & Orders)
+➤ Show all customers and their order dates.
+* ตอบ: 
+1. เริ่มด้วยกำหนดบาง column ที่เราต้องการแสดง เช่น
+SELECT Table.Column_name และ AS ตั้งชื่อที่ต้องการ,,, 
+FROM จากตัวหลัก
+JOIN ตัวรอง ON from.ID = ตัวรอง.ID
+*** ถ้าต้องการหลายตารางก็ Join ไปเลื่อยๆเป็นลำดับ
+
+2. INNER JOIN (Order & Items)
+➤ Show order IDs, product names, and quantities.
+* ตอบ: 
+SELECT 
+Orders.Id AS Order_ID,
+Products.Name AS Product_Name,
+Order_Items.Quantity AS Quantity
+FROM Order_Items
+JOIN Orders ON Orders.Id = Order_Items.Order_Id
+JOIN Products ON Products.Id = Order_Items.Product_Id
+
+3. LEFT JOIN (Customers with/without Orders)
+➤ List all customers and the number of orders (0 if none).
+* ตอบ: 
+SELECT 
+Customers.*,
+Orders.Id AS Order_Id
+FROM Customers
+LEFT JOIN Orders ON Orders.Customer_Id = Customer_Id 
+
+4. LEFT JOIN (Products not ordered)
+➤ Show all products and if they were ever ordered.
+* ตอบ: 
+SELECT 
+Products.*, 
+COALESCE(SUM(Order_Items.Quantity), 0) AS Total_Sold
+FROM Products
+LEFT JOIN Order_Items ON Order_Items.Product_Id = Products.Id
+GROUP BY Products.Id, Products.Name, Products.Price, Products.Category_Id
+
+5. RIGHT JOIN (Products & Order_Items)
+➤ Show order items and ensure all products are listed, even if never ordered.
+* ตอบ: 
+SELECT
+Products.Id AS Product_Id,
+Products.Name AS Product_Name,
+Products.Price AS Product_Price,
+COALESCE(SUM(Order_Items.Quantity), 0) AS Total_Sold
+FROM Order_Items
+RIGHT JOIN Products ON Products.Id = Order_Items.Product_Id
+GROUP BY Products.Id, Products.Name, Products.Price
+ORDER BY Total_Sold DESC;
+
+6. 3-Table JOIN (Orders + Items + Products)
+➤ Show order ID, product name, quantity, and price.
+* ตอบ: 
+SELECT 
+Orders.Id AS Orders_Id, 
+Products.Name, 
+Products.Price,
+Order_Items.Quantity
+FROM Order_Items
+JOIN Products ON Products.Id = Order_Items.Product_Id
+JOIN Orders ON Orders.Id = Order_Items.Order_Id
+*** ถ้าแสดงสินค้าทั้งหมดด้วยแม้ยังไม่ได้ขาย
+FROM Products
+LEFT JOIN Order_Items ON Products.Id = Order_Items.Product_Id
+LEFT JOIN Orders ON Orders.Id = Order_Items.Order_Id;
+
+7. 3-Table JOIN (Customers + Orders + Products)
+➤ Show customer name, product name, and order date.
+* ตอบ: 
+SELECT
+  Customers.Name AS Customer_Name,
+  Products.Name AS Product_Name,
+  Orders.Order_Date AS Order_Date,
+  Order_Items.Quantity AS Total_Quantity,
+  Order_Items.Quantity * Products.Price AS Total_Price
+FROM Customers
+JOIN Orders ON Orders.Customer_Id = Customers.Id
+JOIN Order_Items ON Order_Items.Order_Id = Orders.Id
+JOIN Products ON Products.Id = Order_Items.Product_Id
+GROUP BY 
+  Customers.Name, 
+  Products.Name, 
+  Orders.Order_Date,
+  Order_Items.Quantity,
+  Products.Price;  
+
+8. GROUP BY (Orders per Customer)
+➤ Count how many orders each customer has.
+* ตอบ: 
+SELECT 
+Customers.Id AS Customer_Id,
+COUNT(Orders.Customer_Id) AS Order_Count
+FROM Customers
+JOIN Orders ON Orders.Customer_Id = Customers.Id
+GROUP BY Customers.Id
+
+9. GROUP BY (Quantity per Product)
+➤ Sum quantity sold for each product.
+* ตอบ: 
+SELECT 
+Products.Id AS Product_Id,
+SUM (Order_Items.Quantity) AS Quantity_Sold
+FROM Products
+LEFT JOIN Order_Items ON Order_Items.Product_Id = Products.Id
+GROUP BY Products.Id, Order_Items.Quantity
+
+10. GROUP BY + Aggregate + AVG Price
+➤ Find average product price per category.
+* ตอบ: 
+SELECT 
+  Categories.Id AS Category_Id, 
+  Categories.Name AS Category_Name,
+  AVG(Products.Price) AS Average_Product_Price
+FROM Categories
+JOIN Products ON Products.Category_Id = Categories.Id
+GROUP BY Categories.Id, Categories.Name;
+
+11. HAVING (Filter popular products)
+➤ Show products with total quantity ordered > 5.
+* ตอบ: 
+SELECT 
+Products.Id AS Product_Id, 
+Products.Name AS Product_Name,
+Order_Items.Quantity AS Quantity_Sold_More_Than_5
+FROM Products
+JOIN Order_Items ON Order_Items.Product_Id = Products.Id
+WHERE Order_Items.Quantity >= 5
+GROUP BY Products.Id, Products.Name, Order_Items.Quantity
+
+12.HAVING (Filter active customers)
+➤ Customers who made more than 2 orders.
+* ตอบ: 
+SELECT 
+  Products.Id AS Product_Id, 
+  Products.Name AS Product_Name,
+  SUM(Order_Items.Quantity) AS Total_Quantity_Sold
+FROM Products
+JOIN Order_Items ON Order_Items.Product_Id = Products.Id
+GROUP BY Products.Id, Products.Name
+HAVING SUM(Order_Items.Quantity) >= 5
+ORDER BY Total_Quantity_Sold DESC;
+
+13. ORDER BY Multiple Columns
+➤ List orders sorted by order date desc, then customer name asc.
+* ตอบ: 
+SELECT 
+  Orders.Order_Date AS Order_Date,
+  Orders.Id AS Order_Id,
+  Customers.Name AS Customer_Name
+FROM Orders
+JOIN Customers ON Customers.Id = Orders.Customer_Id
+ORDER BY Orders.Order_Date DESC, Customers.Name ASC;
+
+14. WHERE vs HAVING (Filter orders in month, then quantity > X)
+➤ Use WHERE for date range, HAVING for total quantity.
+* ตอบ: 
+SELECT 
+Orders.Order_Date AS Order_Date, 
+SUM (Order_Items.Quantity) AS Order_Quantity_More_Than_5
+FROM Orders
+JOIN Order_Items ON Order_Items.Order_Id = Orders.Id
+WHERE 
+  YEAR(Orders.Order_Date) = YEAR(DATEADD(YEAR, -1, GETDATE())) AND 
+  MONTH(Orders.Order_Date) = MONTH(GETDATE())
+GROUP BY Orders.Order_Date
+HAVING SUM (Order_Items.Quantity) >= 5
+
+15. WHERE vs HAVING (Filter price vs grouped category avg)
+➤ Show products with price > 50, and category average > 40.
+* ตอบ: 
+SELECT 
+Products.Id AS Product_Id,
+Products.Name AS Product_Name,
+Products.Price AS Product_Price,
+Categories.Id AS Category_Id,
+Categories.Name AS Catergoy_Name,
+AVG(Products.Price) AS Average_Price_MoreThan_40
+FROM Products
+JOIN Categories ON Categories.Id = Products.Category_Id
+WHERE Products.Price >= 50
+GROUP BY Products.Id, Products.Name, Products.Price, Categories.Id, Categories.Name
+HAVING AVG(Products.Price) > 40
+
+===================================================
+
+*** สรุปการทำแบบทดสอบ ***
+
+>>> การใช้ JOIN <<<
+JOIN = แสดงข้อมูลที่ มีตรงกันในทั้งสองตาราง เท่านั้น
+LEFT JOIN = แสดงข้อมูลจากตารางซ้าย และ เฉพาะที่ตรงจากตารางขวา ถ้าไม่ตรงจะเป็น NULL
+RIGHT JOIN = แสดงข้อมูลจากตารางขวา และ เฉพาะที่ตรงจากตารางซ้าย ถ้าไม่ตรงจะเป็น NULL
+
+>>> การใช้ GROUP BY <<< 
+- SELECT ตัวไหนไม่ใช่ Aggregate ต้องอยู่ใน GROUP BY เสมอ
+- ถ้าใช้ Aggregate เช่น SUM(), COUNT(), AVG() ต้องใช้ GROUP BY
+- ไม่รองรับ * เช่น GROUP BY Customer.* แบบนี้ไม่ได้
+
+Aggregate Function = MIN(), MAX(), COUNT(), SUM(), AVG()
+
+>>> การใช้ HAVING <<<
+- ใช้ร่วมกับ Aggregate Function เช่น 
+SELECT
+AVG(Products.Price) AS Average_Price_MoreThan_40
+....
+HAVING AVG(Products.Price) > 40
+
+>>> การใช้ ORDER <<<
+ORDER BY multiple columns = มี DESC และ ASC 
+ORDER BY Orders.Order_Date DESC, Customers.Name ASC;
+
+>>> การใช้ WHERE vs HAVING <<<
+Where 
+- ใช้กับ Column ปกติ 
+- ไวกว่า
+
+Having 
+- ใช้กับ Aggregate Function 
+- ช้ากว่า (กรองหลังรวม)

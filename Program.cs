@@ -11,14 +11,8 @@ class Program
 
         if (int.TryParse(input, out int num))
         {
-            if (num % 2 == 0)
-            {
-                Console.WriteLine($"{num} เป็นเลขคู่");
-            }
-            else
-            {
-                Console.WriteLine($"{num} เป็นเลขคี่");
-            }
+            EvenOrOdd checker = new EvenOrOdd();
+            Console.WriteLine(checker.FindEvenOrOdd(num));
         }
         else
         {
@@ -30,7 +24,7 @@ class Program
         Console.Write("กรุณาใส่ตัวเลขเพื่อกำหนดจำนวนสมาชิกของ Array: ");
         var input2 = Console.ReadLine();
 
-        if (int.TryParse(input, out int num2))
+        if (int.TryParse(input2, out int num2))
         {
             int[] arr = new int[num2];
             List<int> usedNumbers = new List<int>();
@@ -67,14 +61,16 @@ class Program
 
             if (int.TryParse(choice, out int menu))
             {
+                MySort mySort = new MySort();
+                
                 switch (menu)
                 {
                     case 1:
-                        SortArray(arr, true);
+                        mySort.SortArray(arr, true);
                         Console.WriteLine("เรียงจากน้อยไปมาก:");
                         break;
                     case 2:
-                        SortArray(arr, false);
+                        mySort.SortArray(arr, false);
                         Console.WriteLine("เรียงจากมากไปน้อย:");
                         break;
                     default:
@@ -116,27 +112,6 @@ class Program
         {
             Console.WriteLine("ล้มเหลว! กรุณากรอกเฉพาะตัวเลขจำนวนเต็ม");
             return;
-        }
-    }
-
-    // Sort แบบไม่ใช้ Library (Bubble Sort)
-    static void SortArray(int[] array, bool ascending)
-    {
-        for (int i = 0; i < array.Length - 1; i++)
-        {
-            for (int j = 0; j < array.Length - 1 - i; j++)
-            {
-                bool shouldSwap = ascending
-                    ? array[j] > array[j + 1]
-                    : array[j] < array[j + 1];
-
-                if (shouldSwap)
-                {
-                    int temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-                }
-            }
         }
     }
 }
