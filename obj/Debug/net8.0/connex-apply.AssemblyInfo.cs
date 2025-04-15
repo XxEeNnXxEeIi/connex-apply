@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("connex-apply")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81010c121bb3e4e3d44a029b55f4703f6b580dbb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+247e0bc873c9a4683596b314998c5f44782b5dbf")]
 [assembly: System.Reflection.AssemblyProductAttribute("connex-apply")]
 [assembly: System.Reflection.AssemblyTitleAttribute("connex-apply")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
