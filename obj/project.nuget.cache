@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZWV5ZMBOYqI=",
+  "dgSpecHash": "V134UPmxHRs=",
   "success": true,
-  "projectFilePath": "D:\\MyGitHub\\connex-apply\\connex-apply.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\XxEeNnXxEeIi\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.15\\microsoft.netcore.app.ref.8.0.15.nupkg.sha512",
-    "C:\\Users\\XxEeNnXxEeIi\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.15\\microsoft.windowsdesktop.app.ref.8.0.15.nupkg.sha512",
-    "C:\\Users\\XxEeNnXxEeIi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.15\\microsoft.aspnetcore.app.ref.8.0.15.nupkg.sha512",
-    "C:\\Users\\XxEeNnXxEeIi\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.15\\microsoft.netcore.app.host.win-x64.8.0.15.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Tanachod\\MyProject\\connex-apply\\connex-apply.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

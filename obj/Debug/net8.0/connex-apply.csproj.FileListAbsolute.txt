@@ -27,3 +27,4 @@ D:\MyGitHub\connex-apply\obj\Debug\net8.0\refint\connex-apply.dll
 D:\MyGitHub\connex-apply\obj\Debug\net8.0\connex-apply.pdb
 D:\MyGitHub\connex-apply\obj\Debug\net8.0\connex-apply.genruntimeconfig.cache
 D:\MyGitHub\connex-apply\obj\Debug\net8.0\ref\connex-apply.dll
+C:\Tanachod\MyProject\connex-apply\obj\Debug\net8.0\connex-apply.sourcelink.json
